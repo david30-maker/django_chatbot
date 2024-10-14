@@ -1,29 +1,17 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
-
-# Set the working directory in the container
+FROM python:3.10.1-slim-bullseye
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    python3-dev \
-    libcairo2-dev \
-    libffi-dev \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
-# Upgrade pip
+# install system dependencies
+RUN apt-get update
+
+# install dependencies
 RUN pip install --upgrade pip
-
-# Copy requirements.txt to the container
 COPY ./requirements.txt /app/
-
-# Install the Python dependencies
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application code
 COPY . /app
 
-# Set the default command to run your application
-CMD ["python", "app.py"]
+ENTRYPOINT [ "gunicorn", "core.wsgi", "-b", "0.0.0.0:8000"]
