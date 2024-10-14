@@ -11,4 +11,3 @@ def chatbot_response(request):
     response = random.choice(responses)
     return JsonResponse({'response': response})
 
-# Create your views here.
