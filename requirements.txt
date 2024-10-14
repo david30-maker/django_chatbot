@@ -4,6 +4,6 @@ gunicorn==23.0.0
 packaging==23.1
 sqlparse==0.4.4
 typing_extensions==4.7.1
-tsdata==2023.3
+tzdata==2023.3
 whitenoise==6.7.0
 
